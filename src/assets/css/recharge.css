@@ -1,0 +1,148 @@
+
+/* =========================
+   RECHARGE PAGE STYLES
+========================= */
+
+.recharge-section {
+  padding: 15px;
+}
+
+/* =========================
+   BALANCE CARD
+========================= */
+
+.balance-card {
+  background: linear-gradient(135deg, #ff9800, #ff6f00);
+  color: #fff;
+  padding: 20px;
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.balance-card h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 5px;
+}
+
+/* =========================
+   RECHARGE CARD
+========================= */
+
+.recharge-card {
+  border-radius: 18px;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* Input */
+.recharge-card input {
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+/* =========================
+   QUICK AMOUNT BUTTONS
+========================= */
+
+.recharge-card .btn-outline-warning {
+  border-color: #ff9800;
+  color: #ff9800;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.recharge-card .btn-outline-warning:hover {
+  background: #ff9800;
+  color: #fff;
+}
+
+/* =========================
+   PAYMENT OPTIONS
+========================= */
+
+.payment-option {
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.payment-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.payment-label input {
+  margin-right: 10px;
+}
+
+.payment-label i {
+  font-size: 20px;
+  color: #ff9800;
+}
+
+/* =========================
+   RECHARGE BUTTON
+========================= */
+
+.recharge-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  background: #ff9800;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.recharge-btn:hover {
+  background: #fb8c00;
+}
+
+/* Disabled state */
+.recharge-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* =========================
+   INFO BOX
+========================= */
+
+.info-box {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.info-box h6 {
+  color: #ff9800;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.info-box ul {
+  padding-left: 18px;
+  margin: 0;
+}
+
+.info-box ul li {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #555;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 576px) {
+  .balance-card h2 {
+    font-size: 22px;
+  }
+}

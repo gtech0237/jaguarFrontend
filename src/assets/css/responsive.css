@@ -1,0 +1,163 @@
+/* ===========================
+   GLOBAL RESPONSIVE STYLES
+===========================*/
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    font-size:16px;
+}
+
+body{
+    overflow-x:hidden;
+    background:linear-gradient(135deg, #fff8e1, #eef6ff);
+}
+
+img{
+    max-width:100%;
+    height:auto;
+    display:block;
+}
+
+.container,
+.container-fluid{
+    width:100%;
+}
+
+/* Cards */
+
+.card{
+    width:100%;
+}
+
+/* Buttons */
+
+.btn{
+    white-space:nowrap;
+}
+
+/* Tables */
+
+.table-responsive{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+}
+
+.table{
+    min-width:900px;
+}
+
+/* Form */
+
+.form-control,
+.form-select,
+.btn{
+    min-height:45px;
+}
+
+/* Text */
+
+h1{
+    font-size:2rem;
+}
+
+h2{
+    font-size:1.7rem;
+}
+
+h3{
+    font-size:1.5rem;
+}
+
+h4{
+    font-size:1.3rem;
+}
+
+h5{
+    font-size:1.15rem;
+}
+
+h6{
+    font-size:1rem;
+}
+
+/* Desktop */
+
+@media (min-width:1200px){
+
+    .container-fluid{
+        max-width:520px;
+        margin:auto;
+    }
+
+}
+
+/* Tablet */
+
+@media (max-width:992px){
+
+    html{
+        font-size:15px;
+    }
+
+}
+
+/* Mobile */
+
+@media (max-width:768px){
+
+    html{
+        font-size:14px;
+    }
+
+    .dashboard-header{
+
+        flex-direction:column;
+        gap:15px;
+        text-align:center;
+
+    }
+
+    .tab-container{
+
+        flex-direction:column;
+
+    }
+
+    .tab-btn{
+
+        width:100%;
+
+    }
+
+    .row{
+
+        --bs-gutter-x:12px;
+
+    }
+
+}
+
+/* Small Mobile */
+
+@media (max-width:576px){
+
+    html{
+        font-size:13px;
+    }
+
+    .card{
+
+        border-radius:12px;
+
+    }
+
+    .btn{
+
+        width:100%;
+
+    }
+
+}
