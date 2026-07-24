@@ -56,7 +56,7 @@ const routes = [
     path: "/admin/dashboard",
     name: "AdminDashboard",
     component: AdminDashboard,
-    meta: { requiresAuth: true }
+    meta: { requiresAdmin: true }
   },
   {
     path: "/:pathMatch(.*)*",
@@ -103,9 +103,13 @@ router.beforeEach((to) => {
         }
 
         // Dashboard requires admin login
-        if (!adminToken || role !== "ADMIN") {
-            return "/admin/login";
-        }
+        // Only protect admin routes that require admin authentication
+    if (
+        to.meta.requiresAdmin &&
+        (!adminToken || role !== "ADMIN")
+    ) {
+        return "/admin/login";
+    }
 
         return true;
     }
