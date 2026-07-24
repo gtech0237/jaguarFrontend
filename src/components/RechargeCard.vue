@@ -22,13 +22,13 @@
         </h4>
 
         <img
-          src="/usdt-qr.jpg"
+          src="/usdt-qr.jpeg"
           class="img-fluid qr-image"
           alt="USDT QR"
         />
 
         <h6 class="network mt-4">
-          Network : TRC20
+          Network : BEP20
         </h6>
 
         <div class="wallet-box mt-3">
@@ -146,7 +146,7 @@ const amount = ref("");
 const transactionId = ref("");
 
 const walletAddress =
-"0x1b3ef7d89f9c66107254d9f590381e0bb77653c8";
+"0x8bd6FF569699490f019A03E43F1cbA732Bc441f3";
 
 const quickAmounts=[
 10,
