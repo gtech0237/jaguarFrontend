@@ -19,11 +19,14 @@
         <!-- Right Icons -->
         <div class="header-icons">
 
-          <button class="icon-btn">
-
+          <a
+            href="https://t.me/+Qy7KDU2YTv1lYjU1"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="icon-btn"
+            >
             <i class="bi bi-headset"></i>
-
-          </button>
+           </a>
 
           <button class="icon-btn ms-2">
 

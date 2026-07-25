@@ -109,9 +109,7 @@ import { ref } from "vue";
 
 const referralCode = ref("JAG123456");
 
-const referralLink = ref(
-  "https://jaguar.com/register?ref=JAG123456"
-);
+const referralLink = computed(() => `${window.location.origin}/`);
 
 function copyCode() {
 
