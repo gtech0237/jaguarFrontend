@@ -976,6 +976,33 @@ async function withdraw() {
         return;
 
     }
+    if (
+        (withdrawType.value === "ACCOUNT" || paymentMethod.value === "UPI") &&
+        Number(amount.value) < 300
+    ) {
+
+        Toast.fire({
+            icon: "warning",
+            title: "Minimum withdrawal is ₹300."
+        });
+
+        return;
+
+    }
+    if (
+        withdrawType.value === "MANUAL" &&
+        paymentMethod.value === "USDT" &&
+        Number(amount.value) < 3
+    ) {
+
+        Toast.fire({
+            icon: "warning",
+            title: "Minimum withdrawal is 3 USDT."
+        });
+
+        return;
+
+    }
 
     // --------------------------------
     // ACCOUNT
@@ -1031,6 +1058,16 @@ async function withdraw() {
     // --------------------------------
     // Request
     // --------------------------------
+    if (walletDeductionUsdt.value > walletBalance.value) {
+
+        Toast.fire({
+            icon: "error",
+            title: "Insufficient wallet balance."
+        });
+
+        return;
+
+    }
 
     try {
 

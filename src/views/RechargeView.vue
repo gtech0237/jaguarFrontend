@@ -45,6 +45,7 @@ import Header from "@/components/Header.vue";
 import RechargeCard from "@/components/RechargeCard.vue";
 import WithdrawCard from "@/components/WithdrawCard.vue";
 import Footer from "@/components/Footer.vue";
+import Swal from "sweetalert2";
 
 const router = useRouter();
 const route = useRoute();
@@ -60,10 +61,51 @@ function changeTab(tab) {
     activeTab.value = tab;
 
     router.replace({
+
         path: "/recharge",
+
         query: {
+
             tab
+
         }
+
+    });
+
+    if (tab === "withdraw") {
+
+        showWithdrawWarning();
+
+    }
+
+}
+
+function showWithdrawWarning() {
+
+    Swal.fire({
+
+        toast: true,
+
+        position: "top-end",
+
+        icon: "warning",
+
+        title: "⚠ Use BEP20 network only.",
+
+        showConfirmButton: false,
+
+        timer: 3000,
+
+        timerProgressBar: true,
+
+        width: "280px",
+
+        padding: "0.6rem",
+
+        background: "#2b2b2b",
+
+        color: "#f6c667"
+
     });
 
 }
@@ -87,13 +129,15 @@ onMounted(() => {
 
         activeTab.value = "withdraw";
 
+        showWithdrawWarning();
+
     } else {
 
         activeTab.value = "recharge";
 
     }
 
-});
+    });
 
 /* --------------------------
    Watch URL Changes

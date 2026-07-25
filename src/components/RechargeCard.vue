@@ -10,7 +10,7 @@
     <div class="exchange-rate-card">
       <i class="bi bi-currency-exchange"></i>
       <span><strong>1 USDT = ₹100 INR</strong></span>
-  </div>
+    </div>
     <!-- Payment Card -->
 
     <div class="card payment-card mt-4">
@@ -52,7 +52,7 @@
 
           <strong>Important</strong><br>
 
-            Send only <b>USDT</b> using the <b>TRC20</b> network.
+            Send only <b>USDT</b> using the <b>BEP20</b> network.
 
             Ensure the amount you enter below matches the amount you transferred.
 
@@ -150,11 +150,11 @@ const walletAddress =
 
 const quickAmounts=[
 10,
-20,
+15,
 50,
 100,
 200,
-500
+300
 ];
 
 function selectAmount(value){
@@ -220,12 +220,12 @@ async function submitRecharge() {
 
         return;
     }
-    if (Number(amount.value) < 10) {
+    if (Number(amount.value) < 5) {
 
         await Swal.fire({
             icon: "warning",
             title: "Minimum Recharge",
-            text: "Minimum recharge amount is 10 USDT.",
+            text: "Minimum recharge amount is 5 USDT.",
             confirmButtonColor: "#7f6744"
         });
 
@@ -957,6 +957,50 @@ async function submitRecharge() {
 
     }
 
+
+}
+.exchange-rate-card{
+
+    margin-top:12px;
+
+    background:#2b2b2b;
+
+    border:1px solid #f6c667;
+
+    border-radius:14px;
+
+    padding:14px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    color:#ffffff;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.35);
+
+}
+
+.exchange-rate-card i{
+
+    font-size:22px;
+
+    color:#f6c667;
+
+}
+
+.exchange-rate-card span,
+.exchange-rate-card strong{
+
+    color:#ffffff !important;
+
+    font-size:16px;
+
+    font-weight:700;
 
 }
 

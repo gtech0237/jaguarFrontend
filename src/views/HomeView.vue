@@ -2,6 +2,7 @@
 
 <div class="home-page">
 
+    <AnnouncementPopup />
     <Header/>
 
     <Banner/>
@@ -47,6 +48,7 @@ import QuickMenu from "@/components/QuickMenu.vue";
 import PlanTabs from "@/components/PlanTabs.vue";
 import PlanCard from "@/components/PlanCard.vue";
 import Footer from "@/components/Footer.vue";
+import AnnouncementPopup from "@/components/AnnouncementPopup.vue";
 
 const router = useRouter();
 

@@ -249,68 +249,7 @@
 
 </div>
 
-      <div
-    v-if="showWithdraw"
-    class="menu-content"
->
-
-    <div
-        v-if="withdrawHistory.length === 0"
-        class="empty-box"
-    >
-        No withdraw history found.
-    </div>
-
-    <div
-        v-for="item in withdrawHistory"
-        :key="item.id"
-        class="history-card"
-    >
-
-        <div class="history-left">
-
-            <div class="history-amount withdraw-amount">
-
-                {{ formatAmount(item.requestedAmount) }} USDT
-
-            </div>
-
-            <small>
-
-                Payable :
-                {{ formatAmount(item.payableAmount) }} USDT
-
-            </small>
-
-            <small>
-
-                {{ item.paymentMethod }}
-
-            </small>
-
-            <small>
-
-                {{ formatDate(item.createdOn) }}
-
-            </small>
-
-        </div>
-
-        <span
-            class="badge"
-            :class="{
-                'bg-warning': item.status === 'PENDING',
-                'bg-success': item.status === 'APPROVED',
-                'bg-danger': item.status === 'REJECTED'
-            }"
-        >
-            {{ item.status }}
-        </span>
-
-    </div>
-
-</div>
-
+     
       <!-- Personal Information -->
       <div
         class="menu-item"
@@ -1106,7 +1045,12 @@ onMounted(() => {
 
 }
 
-
+.history-title {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
 
 /* ===========================
    Mobile

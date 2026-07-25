@@ -61,10 +61,7 @@
     padding:12px 0;
 }
 
-.logo{
-    height:42px;
-    object-fit:contain;
-}
+
 
 /* Logo hover */
 
@@ -73,15 +70,18 @@
     align-items:center;
 }
 
-.logo{
-    height:42px;
-    object-fit:contain;
-    transition:.35s ease;
-    cursor:pointer;
+.logo {
+    width: 60px;          
+    height: 42px;         
+    object-fit: cover;    
+    border-radius: 50%;   
+    border: 2px solid #7f6744; 
+    transition: .35s ease;
+    cursor: pointer;
 }
 
-.logo:hover{
-    transform:scale(1.05);
+.logo:hover {
+    transform: scale(1.05);
 }
 
 /* Icons */
@@ -106,9 +106,8 @@
 
     border-radius:50%;
 
-    background:#ffffff;
-
-    color:#7f6744;
+    background: var(--bs-body-color);
+    color: #ffffff;  
 
     box-shadow:0 4px 12px rgba(0,0,0,.08);
 

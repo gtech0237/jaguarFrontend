@@ -1,37 +1,25 @@
 <template>
     <div class="auth-page">
 
-        <!-- Background Shapes -->
-        <div class="bg-circle bg-circle-1"></div>
-        <div class="bg-circle bg-circle-2"></div>
+        <!-- Background Overlay -->
+        <div class="overlay"></div>
 
         <div class="auth-wrapper">
 
-            <!-- Logo -->
-            <div class="logo-section">
+            <!-- ===================== -->
+            <!-- AUTH CARD -->
+            <!-- ===================== -->
 
-                <div class="logo-icon">
-                    💰
-                </div>
-
-                <h1>Jaguar</h1>
-
-                <p>
-                    Invest Smart • Earn Daily • Build Your Future
-                </p>
-
-            </div>
-
-            <!-- Card -->
             <div class="auth-card">
 
                 <!-- Tabs -->
+
                 <div class="tab-container">
 
                     <button
                         class="tab-btn"
                         :class="{ active: activeTab === 'login' }"
-                        @click="activeTab='login'"
+                        @click="activeTab = 'login'"
                     >
                         <i class="bi bi-box-arrow-in-right me-2"></i>
                         Login
@@ -40,7 +28,7 @@
                     <button
                         class="tab-btn"
                         :class="{ active: activeTab === 'register' }"
-                        @click="activeTab='register'"
+                        @click="activeTab = 'register'"
                     >
                         <i class="bi bi-person-plus me-2"></i>
                         Register
@@ -51,17 +39,19 @@
                 <!-- ================= LOGIN ================= -->
 
                 <div
-                    v-if="activeTab==='login'"
+                    v-if="activeTab === 'login'"
                     class="form-section"
                 >
 
-                    <h3>
+                    <h2 class="form-title">
                         Welcome Back 👋
-                    </h3>
+                    </h2>
 
                     <p class="subtitle">
                         Login to your investment account
                     </p>
+
+                    <!-- Phone -->
 
                     <div class="mb-3">
 
@@ -86,6 +76,8 @@
 
                     </div>
 
+                    <!-- Password -->
+
                     <div class="mb-4">
 
                         <label class="form-label">
@@ -106,14 +98,16 @@
                             >
 
                             <button
-                                class="btn btn-light border"
                                 type="button"
-                                @click="showLoginPassword=!showLoginPassword"
+                                class="btn eye-btn"
+                                @click="showLoginPassword = !showLoginPassword"
                             >
+
                                 <i
                                     class="bi"
                                     :class="showLoginPassword ? 'bi-eye-slash' : 'bi-eye'"
                                 ></i>
+
                             </button>
 
                         </div>
@@ -121,11 +115,20 @@
                     </div>
 
                     <button
-                        class="btn btn-warning w-100 auth-btn"
+                        class="btn auth-btn w-100"
                         @click="login"
+                        :disabled="loading"
                     >
-                        <i class="bi bi-box-arrow-in-right me-2"></i>
-                        Login
+
+                        <span v-if="loading">
+                            Logging in...
+                        </span>
+
+                        <span v-else>
+                            <i class="bi bi-box-arrow-in-right me-2"></i>
+                            Login
+                        </span>
+
                     </button>
 
                 </div>
@@ -137,13 +140,15 @@
                     class="form-section"
                 >
 
-                    <h3>
+                    <h2 class="form-title">
                         Create Account 🚀
-                    </h3>
+                    </h2>
 
                     <p class="subtitle">
                         Start earning today
                     </p>
+
+                    <!-- Phone -->
 
                     <div class="mb-3">
 
@@ -168,6 +173,8 @@
 
                     </div>
 
+                    <!-- Login Password -->
+
                     <div class="mb-3">
 
                         <label class="form-label">
@@ -188,19 +195,23 @@
                             >
 
                             <button
-                                class="btn btn-light border"
                                 type="button"
-                                @click="showPassword=!showPassword"
+                                class="btn eye-btn"
+                                @click="showPassword = !showPassword"
                             >
+
                                 <i
                                     class="bi"
                                     :class="showPassword ? 'bi-eye-slash' : 'bi-eye'"
                                 ></i>
+
                             </button>
 
                         </div>
 
                     </div>
+
+                    <!-- Withdraw Password -->
 
                     <div class="mb-3">
 
@@ -222,25 +233,29 @@
                             >
 
                             <button
-                                class="btn btn-light border"
                                 type="button"
-                                @click="showWithdrawPassword=!showWithdrawPassword"
+                                class="btn eye-btn"
+                                @click="showWithdrawPassword = !showWithdrawPassword"
                             >
+
                                 <i
                                     class="bi"
                                     :class="showWithdrawPassword ? 'bi-eye-slash' : 'bi-eye'"
                                 ></i>
+
                             </button>
 
                         </div>
 
                     </div>
 
+                    <!-- Referral -->
+
                     <div class="mb-4">
 
                         <label class="form-label">
                             Referral Code
-                            <small class="text-muted">(Optional)</small>
+                            <small>(Optional)</small>
                         </label>
 
                         <div class="input-group">
@@ -251,9 +266,8 @@
 
                             <input
                                 v-model="referralCode"
-                                type="text"
                                 class="form-control"
-                                placeholder="Referral code (Optional)"
+                                placeholder="Referral Code"
                             >
 
                         </div>
@@ -261,11 +275,20 @@
                     </div>
 
                     <button
-                        class="btn btn-warning w-100 auth-btn"
+                        class="btn auth-btn w-100"
                         @click="register"
+                        :disabled="loading"
                     >
-                        <i class="bi bi-person-check me-2"></i>
-                        Create Account
+
+                        <span v-if="loading">
+                            Creating Account...
+                        </span>
+
+                        <span v-else>
+                            <i class="bi bi-person-check me-2"></i>
+                            Create Account
+                        </span>
+
                     </button>
 
                 </div>
@@ -293,52 +316,52 @@ import Swal from "sweetalert2";
 
 const router = useRouter();
 
-/* ===========================
-   Tabs
-=========================== */
+/* ==========================================
+   ACTIVE TAB
+========================================== */
 
 const activeTab = ref("login");
 
-/* ===========================
-   Registration
-=========================== */
+/* ==========================================
+   REGISTER
+========================================== */
 
 const phone = ref("");
 const password = ref("");
 const withdrawPassword = ref("");
 const referralCode = ref("");
 
-/* ===========================
-   Login
-=========================== */
+/* ==========================================
+   LOGIN
+========================================== */
 
 const loginPhone = ref("");
 const loginPassword = ref("");
 
-/* ===========================
-   Password Toggle
-=========================== */
+/* ==========================================
+   PASSWORD TOGGLE
+========================================== */
 
 const showPassword = ref(false);
 const showWithdrawPassword = ref(false);
 const showLoginPassword = ref(false);
 
-/* ===========================
-   Loading
-=========================== */
+/* ==========================================
+   LOADING
+========================================== */
 
 const loading = ref(false);
 
-/* ===========================
-   Client Info
-=========================== */
+/* ==========================================
+   CLIENT INFO
+========================================== */
 
 const ipAddress = ref("");
 const location = ref("");
 
-/* ===========================
-   Mounted
-=========================== */
+/* ==========================================
+   ON MOUNT
+========================================== */
 
 onMounted(async () => {
 
@@ -347,7 +370,6 @@ onMounted(async () => {
     if (token) {
 
         router.replace("/home");
-
         return;
 
     }
@@ -356,9 +378,9 @@ onMounted(async () => {
 
 });
 
-/* ===========================
-   Load IP & Location
-=========================== */
+/* ==========================================
+   LOAD CLIENT IP
+========================================== */
 
 async function loadClientInfo() {
 
@@ -388,19 +410,21 @@ async function loadClientInfo() {
 
 }
 
-/* ===========================
-   Register
-=========================== */
+/* ==========================================
+   REGISTER
+========================================== */
 
 async function register() {
 
     if (
+
         !phone.value ||
         !password.value ||
         !withdrawPassword.value
+
     ) {
 
-        Swal.fire({
+        await Swal.fire({
 
             icon: "warning",
 
@@ -473,7 +497,7 @@ async function register() {
 
         }
 
-        Swal.fire({
+        await Swal.fire({
 
             icon: "error",
 
@@ -493,18 +517,20 @@ async function register() {
 
 }
 
-/* ===========================
-   Login
-=========================== */
+/* ==========================================
+   LOGIN
+========================================== */
 
 async function login() {
 
     if (
+
         !loginPhone.value ||
         !loginPassword.value
+
     ) {
 
-        Swal.fire({
+        await Swal.fire({
 
             icon: "warning",
 
@@ -529,8 +555,6 @@ async function login() {
             password: loginPassword.value
 
         });
-
-        /* Save Login */
 
         localStorage.setItem(
             "token",
@@ -574,7 +598,7 @@ async function login() {
 
         }
 
-        Swal.fire({
+        await Swal.fire({
 
             icon: "error",
 
@@ -598,15 +622,17 @@ async function login() {
 
 <style scoped>
 
-/* ===========================
-   Background
-=========================== */
+/* =====================================================
+   BACKGROUND
+===================================================== */
 
 .auth-page{
 
-    min-height:100vh;
+    position:relative;
 
-    background:linear-gradient(135deg,#fff8e1,#eef6ff);
+    width:100%;
+
+    min-height:100vh;
 
     display:flex;
 
@@ -614,171 +640,99 @@ async function login() {
 
     align-items:center;
 
-    padding:30px 18px;
-
-    position:relative;
-
     overflow:hidden;
+
+    background:url("@/assets/images/adminLogin.png") no-repeat center center;
+
+    background-size:cover;
 
 }
 
-/* Decorative Circles */
+/* =====================================================
+   OVERLAY
+===================================================== */
 
-.bg-circle{
+.overlay{
 
     position:absolute;
 
-    border-radius:50%;
+    inset:0;
 
-    filter:blur(70px);
+    background:rgba(0,0,0,.45);
 
-    opacity:.35;
+    backdrop-filter:blur(1px);
 
-    z-index:0;
-
-}
-
-.bg-circle-1{
-
-    width:260px;
-
-    height:260px;
-
-    background:linear-gradient(135deg,#7f6744,#5a4d2e);
-
-    top:-80px;
-
-    left:-80px;
+    z-index:1;
 
 }
 
-.bg-circle-2{
-
-    width:320px;
-
-    height:320px;
-
-    background:#4dabff;
-
-    bottom:-120px;
-
-    right:-100px;
-
-}
-
-/* ===========================
-   Wrapper
-=========================== */
+/* =====================================================
+   WRAPPER
+===================================================== */
 
 .auth-wrapper{
-
-    width:100%;
-
-    max-width:420px;
 
     position:relative;
 
     z-index:2;
 
-}
+    width:100%;
 
-/* ===========================
-   Logo
-=========================== */
-
-.logo-section{
-
-    text-align:center;
-
-    margin-bottom:25px;
-
-}
-
-.logo-icon{
-
-    width:90px;
-
-    height:90px;
-
-    border-radius:50%;
+    max-width:460px;
 
     margin:auto;
 
-    background:linear-gradient(135deg,#7f6744,#5a4d2e);
-
     display:flex;
+
+    flex-direction:column;
 
     justify-content:center;
 
     align-items:center;
 
-    font-size:42px;
-
-    color:#fff;
-
-    box-shadow:0 15px 35px rgba(255,152,0,.35);
+    padding:20px;
 
 }
 
-.logo-section h1{
-
-    margin-top:18px;
-
-    font-size:34px;
-
-    font-weight:800;
-
-    color:#7f6744;
-
-    letter-spacing:1px;
-
-}
-
-.logo-section p{
-
-    margin-top:8px;
-
-    color:#666;
-
-    font-size:15px;
-
-}
-
-/* ===========================
-   Card
-=========================== */
+/* =====================================================
+   CARD
+===================================================== */
 
 .auth-card{
 
-    background:rgba(255,255,255,.92);
+    width:100%;
+
+    background:rgba(18,18,18,.82);
 
     backdrop-filter:blur(15px);
 
+    -webkit-backdrop-filter:blur(15px);
+
+    border:1px solid rgba(214,176,96,.25);
+
     border-radius:24px;
 
-    padding:28px;
+    padding:30px;
 
-    box-shadow:0 20px 50px rgba(0,0,0,.12);
-
-    border:1px solid rgba(255,255,255,.4);
+    box-shadow:0 15px 40px rgba(0,0,0,.55);
 
 }
 
-/* ===========================
-   Tabs
-=========================== */
+/* =====================================================
+   TABS
+===================================================== */
 
 .tab-container{
 
     display:flex;
 
-    background:#f0f0f0;
+    background:#1d1d1d;
 
-    border-radius:14px;
+    border-radius:15px;
 
     padding:5px;
 
-    margin-bottom:30px;
+    margin-bottom:28px;
 
 }
 
@@ -790,45 +744,49 @@ async function login() {
 
     background:transparent;
 
-    padding:13px;
+    color:#cfcfcf;
 
-    border-radius:10px;
+    padding:14px;
 
-    font-weight:600;
+    border-radius:12px;
 
-    color:#666;
+    font-size:16px;
 
-    transition:.3s;
+    font-weight:700;
 
-}
-
-.tab-btn:hover{
-
-    color:#7f6744;
+    transition:.25s;
 
 }
 
 .tab-btn.active{
 
-    background:#7f6744;
+    background:linear-gradient(135deg,#d5a53d,#80653d);
 
     color:#fff;
 
-    box-shadow:0 8px 18px rgba(127,103,68,.3);
+}
+
+.tab-btn:hover{
+
+    color:#fff;
 
 }
 
-/* ===========================
-   Form
-=========================== */
+/* =====================================================
+   TITLES
+===================================================== */
 
-.form-section h3{
+.form-title{
 
     text-align:center;
 
-    font-weight:700;
+    color:#fff;
 
-    color:#222;
+    font-size:34px;
+
+    font-weight:800;
+
+    margin-bottom:6px;
 
 }
 
@@ -836,221 +794,528 @@ async function login() {
 
     text-align:center;
 
-    color:#777;
-
-    margin-top:6px;
+    color:#bfbfbf;
 
     margin-bottom:28px;
-
-    font-size:14px;
-
-}
-
-.form-label{
-
-    font-weight:600;
-
-    color:#555;
-
-    margin-bottom:6px;
-
-}
-
-.input-group{
-
-    margin-bottom:4px;
-
-}
-
-.input-group-text{
-
-    background:#fff;
-
-    border-right:none;
-
-    border-radius:12px 0 0 12px;
-
-    color:#7f6744;
-
-}
-
-.form-control{
-
-    height:52px;
-
-    border-left:none;
-
-    border-radius:0 12px 12px 0;
 
     font-size:15px;
 
 }
 
-.form-control:focus{
+/* =====================================================
+   FORM
+===================================================== */
 
-    border-color:#7f6744;
+.form-label{
 
-    box-shadow:0 0 0 .2rem rgba(127,103,68,.18);
+    color:#e4c16d;
+
+    font-weight:700;
+
+    margin-bottom:8px;
+
+    display:block;
 
 }
 
-.btn-light{
+.form-label small{
+
+    color:#b5b5b5;
+
+}
+
+/* =====================================================
+   INPUT GROUP
+===================================================== */
+
+.input-group{
+
+    margin-bottom:18px;
+
+}
+
+.input-group-text{
+
+    background:#151515;
+
+    color:#d6b060;
+
+    border:1px solid #5f4d2d;
+
+    border-right:none;
+
+    min-width:55px;
+
+    justify-content:center;
+
+    border-radius:14px 0 0 14px;
+
+}
+
+.form-control{
+
+    height:56px;
+
+    background:#151515;
+
+    color:#fff;
+
+    border:1px solid #5f4d2d;
 
     border-left:none;
 
-    border-radius:0 12px 12px 0;
+    border-radius:0 14px 14px 0;
+
+    font-size:15px;
 
 }
 
-.auth-btn{
+.form-control::placeholder{
 
-    height:54px;
+    color:#888;
+
+}
+
+.form-control:focus{
+
+    background:#151515;
+
+    color:#fff;
+
+    border-color:#d6b060;
+
+    box-shadow:none;
+
+}
+
+.eye-btn{
+
+    background:#151515;
+
+    color:#bdbdbd;
+
+    border:1px solid #5f4d2d;
+
+    border-left:none;
+
+    border-radius:0 14px 14px 0;
+
+}
+
+.eye-btn:hover{
+
+    color:#fff;
+
+    background:#1c1c1c;
+
+}
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.auth-page{
+    position:relative;
+    width:100%;
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+
+    overflow:hidden;
+
+    background:url("@/assets/images/adminLogin.png") center top / cover no-repeat;
+}
+
+.overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.45);
+}
+
+/* =========================================================
+   WRAPPER
+========================================================= */
+
+.auth-wrapper{
+    position:relative;
+    z-index:5;
+
+    width:100%;
+    max-width:470px;
+
+    margin-top:70px;      /* Move form upward */
+    margin-bottom:40px;
+
+    padding:0 15px;
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+.auth-card{
+
+    background: transparent;
+
+    backdrop-filter: none;
+
+    -webkit-backdrop-filter: none;
+
+    border: none;
+
+    border-radius: 22px;
+
+    padding: 30px;
+
+    box-shadow: none;
+
+}
+
+/* =========================================================
+   TABS
+========================================================= */
+
+.tab-container{
+
+    display:flex;
+
+    background:#202020;
 
     border-radius:14px;
+
+    padding:5px;
+
+    margin-bottom:28px;
+
+}
+
+.tab-btn{
+
+    flex:1;
+
+    border:none;
+
+    background:transparent;
+
+    color:#d7d7d7;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    transition:.25s;
+
+}
+
+.tab-btn.active{
+
+    background:linear-gradient(135deg,#d9b14b,#816739);
+
+    color:#fff;
+
+}
+
+/* =========================================================
+   TITLES
+========================================================= */
+
+.form-title{
+
+    text-align:center;
+
+    color:#fff;
+
+    font-size:30px;
+
+    font-weight:800;
+
+    margin-bottom:8px;
+
+}
+
+.subtitle{
+
+    text-align:center;
+
+    color:#d2d2d2;
+
+    margin-bottom:28px;
+
+}
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+.form-label{
+
+    color:#e0bd6b;
+
+    font-weight:700;
+
+    margin-bottom:8px;
+
+}
+
+.form-label small{
+
+    color:#bbbbbb;
+
+}
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.input-group{
+
+    margin-bottom:18px;
+
+}
+
+.input-group-text{
+
+    background:#181818;
+
+    color:#d7b15c;
+
+    border:1px solid #5b4727;
+
+    border-right:none;
+
+    border-radius:14px 0 0 14px;
+
+}
+
+.form-control{
+
+    height:56px;
+
+    background:#181818;
+
+    border:1px solid #5b4727;
+
+    border-left:none;
+
+    color:#fff;
+
+    border-radius:0 14px 14px 0;
+
+}
+
+.form-control::placeholder{
+
+    color:#8c8c8c;
+
+}
+
+.form-control:focus{
+
+    background:#181818;
+
+    color:#fff;
+
+    border-color:#d4aa43;
+
+    box-shadow:none;
+
+}
+
+.eye-btn{
+
+    background:#181818;
+
+    color:#cfcfcf;
+
+    border:1px solid #5b4727;
+
+    border-left:none;
+
+    border-radius:0 14px 14px 0;
+
+}
+
+.eye-btn:hover{
+
+    background:#181818;
+
+    color:#fff;
+
+}
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.auth-btn{
+
+    width:100%;
+
+    height:56px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:linear-gradient(135deg,#d7b04c,#7f6744);
+
+    color:#fff;
 
     font-size:17px;
 
     font-weight:700;
 
-    transition:.3s;
+    transition:.2s;
 
 }
 
 .auth-btn:hover{
 
-    transform:translateY(-2px);
+    opacity:.95;
 
-    box-shadow:0 12px 24px rgba(255,152,0,.3);
+    color:#fff;
 
 }
 
-/* ===========================
-   Footer
-=========================== */
+/* =========================================================
+   FOOTER
+========================================================= */
 
 .bottom-text{
 
-    margin-top:20px;
-
     text-align:center;
+
+    margin-top:18px;
+
+    color:#eeeeee;
 
     font-size:13px;
 
-    color:#666;
+}
+
+/* =========================================================
+   REMOVE ALL HOVER MOVEMENT
+========================================================= */
+
+.input-group:hover{
+    transform:none;
+}
+
+.auth-card:hover{
+    box-shadow:0 18px 40px rgba(0,0,0,.45);
+}
+
+button:hover{
+    transform:none;
+}
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+.auth-card{
+    animation:fade .45s ease;
+}
+
+@keyframes fade{
+
+    from{
+        opacity:0;
+        transform:translateY(12px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 
 }
 
-/* ===========================
-   Responsive
-=========================== */
+/* =========================================================
+   MOBILE
+========================================================= */
 
-@media(max-width:576px){
+@media(max-width:768px){
 
-    .auth-page{
+    .auth-wrapper{
 
-        padding:20px 14px;
+        margin-top:45px;
+
+        max-width:100%;
 
     }
 
     .auth-card{
 
-        padding:22px;
-
-        border-radius:20px;
+        padding:24px;
 
     }
 
-    .logo-icon{
+    .form-title{
 
-        width:75px;
-
-        height:75px;
-
-        font-size:34px;
-
-    }
-
-    .logo-section h1{
-
-        font-size:28px;
+        font-size:26px;
 
     }
 
     .tab-btn{
 
-        padding:11px;
+        font-size:15px;
 
-        font-size:14px;
+    }
+
+}
+
+@media(max-width:576px){
+
+    .auth-page{
+
+        align-items:flex-start;
+
+    }
+
+    .auth-wrapper{
+
+        margin-top:25px;
+
+    }
+
+    .auth-card{
+
+        padding:20px;
+
+        border-radius:18px;
+
+    }
+
+    .form-title{
+
+        font-size:23px;
+
+    }
+
+    .subtitle{
+
+        font-size:13px;
 
     }
 
     .form-control{
 
-        height:48px;
-
-        font-size:14px;
+        height:50px;
 
     }
 
     .auth-btn{
 
-        height:50px;
-
-        font-size:16px;
+        height:52px;
 
     }
 
-}
-
-/* ===========================
-   Animation
-=========================== */
-
-.auth-card{
-
-    animation:fadeUp .7s ease;
-
-}
-
-@keyframes fadeUp{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(30px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
-    }
-
-}
-.btn-warning {
-    --bs-btn-color: #ffffff;
-    --bs-btn-bg: #7f6744;
-    --bs-btn-border-color: #7f6744;
-
-    --bs-btn-hover-color: #ffffff;
-    --bs-btn-hover-bg: #6d593c;
-    --bs-btn-hover-border-color: #6d593c;
-
-    --bs-btn-focus-shadow-rgb: 127, 103, 68;
-
-    --bs-btn-active-color: #ffffff;
-    --bs-btn-active-bg: #5c4b33;
-    --bs-btn-active-border-color: #5c4b33;
-
-    --bs-btn-active-shadow: inset 0 3px 5px rgba(0,0,0,.15);
-
-    --bs-btn-disabled-color: #ffffff;
-    --bs-btn-disabled-bg: #a38c68;
-    --bs-btn-disabled-border-color: #a38c68;
 }
 
 </style>

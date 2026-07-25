@@ -88,7 +88,7 @@
 
             <h3>
 
-                $
+                INR
                 {{ totalInvestedAmount }}
 
             </h3>
@@ -123,7 +123,7 @@
 
             <h3>
 
-                $
+                INR
                 {{ totalDailyIncome }}
 
             </h3>
@@ -376,7 +376,7 @@
 
                         <strong>
 
-                            $
+                            INR
                             {{ item.investmentAmount }}
 
                         </strong>
@@ -392,7 +392,7 @@
 
                         <span class="income-text">
 
-                            $
+                            INR
                             {{ item.dailyIncome }}
 
                             / Day
