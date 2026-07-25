@@ -105,7 +105,7 @@
 
 <script setup>
 
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const referralCode = ref("JAG123456");
 
