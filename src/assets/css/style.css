@@ -1,0 +1,81 @@
+/* =========================
+   GLOBAL STYLE (Balavita)
+========================= */
+
+*,
+*::before,
+*::after{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    min-height:100vh;
+    overflow-x:hidden;
+    font-family:"Poppins",sans-serif;
+    background:#f4f7fc;
+    color:#333;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+body{
+    margin:0;
+}
+
+#app{
+    width:100%;
+    min-height:100vh;
+    position:relative;
+}
+
+/* Images */
+
+img{
+    max-width:100%;
+    display:block;
+}
+
+/* Links */
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* Buttons */
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+/* Inputs */
+
+input,
+textarea,
+select{
+    font-family:inherit;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:#f1f1f1;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#7f6744;
+    border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#5c4b33;
+}
