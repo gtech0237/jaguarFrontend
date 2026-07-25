@@ -8,7 +8,7 @@
         <img
             :src="productImage"
             :alt="product.productName"
-        >
+        />
 
     </div>
 
@@ -92,9 +92,34 @@
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
 import api from "@/services/api";
+import { computed } from "vue";
 
 /* Local Product Image */
-import productImage from "@/assets/images/product.jpg";
+import Product1 from "@/assets/images/Product1.png";
+import Product2 from "@/assets/images/Product2.png";
+import Product3 from "@/assets/images/Product3.png";
+import Product4 from "@/assets/images/Product4.png";
+import Product5 from "@/assets/images/Product5.png";
+
+const productImages = {
+
+    "GEAR-1": Product1,
+
+    "GEAR-2": Product2,
+
+    "GEAR-3": Product3,
+
+    "GEAR-4": Product4,
+
+    "GEAR-5": Product5
+
+};
+
+const productImage = computed(() => {
+
+    return productImages[props.product.productName] || Product1;
+
+});
 
 const router = useRouter();
 
