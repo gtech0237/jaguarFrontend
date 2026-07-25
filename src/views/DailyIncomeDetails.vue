@@ -224,65 +224,71 @@
 
                 <thead>
 
-
                 <tr>
-
 
                     <th>
                         Investment ID
                     </th>
 
-
                     <th>
                         User ID
                     </th>
-
 
                     <th>
                         Phone
                     </th>
 
-
                     <th>
                         Plan
                     </th>
-
 
                     <th>
                         Product
                     </th>
 
-
                     <th>
                         Invested
                     </th>
-
 
                     <th>
                         Daily Income
                     </th>
 
-
                     <th>
                         Duration
                     </th>
-
 
                     <th>
                         Start Date
                     </th>
 
-
                     <th>
                         End Date
                     </th>
 
+                    <th>
+                        Completed Days
+                    </th>
+
+                    <th>
+                        Days Left
+                    </th>
+
+                    <th>
+                        Wallet Balance
+                    </th>
+
+                    <th>
+                        Total Generated
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
 
                 </tr>
 
-
                 </thead>
-
 
 
                 <tbody>
@@ -421,7 +427,7 @@
 
                     <td>
 
-                        {{ formatDateOnly(item.startDate) }}
+                        {{ formatDateOnly(item.purchaseDate) }}
 
                     </td>
 
@@ -441,7 +447,7 @@
 
                         <span class="days-pill">
 
-                            {{ item.daysPassed }}
+                            {{ item.completedDays }}
 
                             Days
 
@@ -496,8 +502,8 @@
 
                         <span class="income-text">
 
-                            $
-                            {{ item.totalIncomeGenerated }}
+                            INR
+                            {{ item.totalIncomePaid }}
 
                         </span>
 
@@ -709,13 +715,14 @@ async function loadDailyIncomeDetails(){
         );
 
 
-
+        /*
         incomeDetails.value =
             response.data;
         console.log(
             "Daily Income Details Loaded",
             incomeDetails.value
         );
+        */
 
 
     }

@@ -1,399 +1,718 @@
 <template>
-  <div class="container-fluid profile-page pb-3">
 
-    <!-- Banner -->
-    <div class="profile-banner">
+<div class="container-fluid profile-page pb-3">
 
-      <div class="profile-image">
+
+<!-- ================= PROFILE BANNER ================= -->
+
+<div class="profile-banner">
+
+    <div class="profile-image">
         <i class="bi bi-person-circle"></i>
-      </div>
+    </div>
 
-      <h4 class="mt-2">
+
+    <h4 class="mt-2">
         Welcome {{ user.phone }}
-      </h4>
+    </h4>
 
-      <small>
+
+    <small>
         User ID : {{ user.id }}
-      </small>
-
-    </div>
-
-    <!-- Summary Cards -->
-    <div class="row mt-4 g-3">
-
-      <div class="col-4">
-        <div class="summary-card">
-
-          <i class="bi bi-wallet2"></i>
-
-          <h6>Balance</h6>
-
-          <h5>{{ formatAmount(user.balance) }} USDT</h5>
-
-        </div>
-      </div>
-
-      <div class="col-4">
-        <div class="summary-card">
-
-          <i class="bi bi-graph-up-arrow"></i>
-
-          <h6>Income</h6>
-
-          <h5>{{ formatAmount(user.totalIncome) }} INR</h5>
-
-        </div>
-      </div>
-
-      <div class="col-4">
-        <div class="summary-card">
-
-          <i class="bi bi-cash-stack"></i>
-
-          <h6>Recharge</h6>
-
-          <h5>{{ formatAmount(user.totalRecharge) }} INR</h5>
-
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Menu -->
-    <div class="menu-list mt-4">
-
-      <!-- Recharge History -->
-      <div
-        class="menu-item"
-        @click="toggleRechargeHistory"
-      >
-
-        <div>
-
-          <i class="bi bi-credit-card"></i>
-
-          Recharge Details
-
-        </div>
-
-        <i
-          :class="showRechargeHistory
-            ? 'bi bi-chevron-up'
-            : 'bi bi-chevron-down'"
-        ></i>
-
-      </div>
-
-      <div
-        v-if="showRechargeHistory"
-        class="menu-content"
-      >
-
-        <div
-          v-if="rechargeHistory.length === 0"
-          class="empty-box"
-        >
-
-          No successful recharge found.
-
-        </div>
-
-        <div
-          v-for="item in rechargeHistory"
-          :key="item.id"
-          class="history-card"
-        >
-
-          <div class="history-left">
-
-            <div class="history-amount">
-
-              {{ formatAmount(item.amount) }} USDT
-
-            </div>
-
-            <small>
-
-              {{ formatDate(item.createdOn) }}
-
-            </small>
-
-          </div>
-
-          <span
-            class="badge"
-            :class="item.status === 'SUCCESS'
-              ? 'bg-success'
-              : 'bg-danger'"
-          >
-
-            {{ item.status }}
-
-          </span>
-
-        </div>
-
-      </div>
-
-      <!-- Withdraw -->
-      <div
-        class="menu-item"
-        @click="toggleWithdraw"
-      >
-
-        <div>
-
-          <i class="bi bi-cash"></i>
-
-          Withdraw Details
-
-        </div>
-
-        <i
-          :class="showWithdraw
-            ? 'bi bi-chevron-up'
-            : 'bi bi-chevron-down'"
-        ></i>
-
-      </div>
-
-<div
-  v-if="showWithdraw"
-  class="menu-content"
->
-
-  <div
-    v-if="withdrawHistory.length===0"
-    class="empty-box"
-  >
-
-    No withdraw history found.
-
-  </div>
-
-  <div
-    v-for="item in withdrawHistory"
-    :key="item.id"
-    class="history-card withdraw-card"
-  >
-
-    <div class="history-left">
-
-      <div class="history-title">
-
-        Wallet Deduction
-
-      </div>
-
-      <div class="history-amount">
-
-        {{ formatAmount(item.requestedAmountUsdt) }} USDT
-
-      </div>
-
-      <small>
-
-        Equivalent :
-        ₹{{ formatAmount(item.requestedAmountInr) }}
-
-      </small>
-
-      <small>
-
-        Fee :
-        {{ formatAmount(item.serviceFee) }}
-        {{ item.currency }}
-
-      </small>
-
-      <small class="pay-user">
-
-        Pay User :
-        {{ formatAmount(item.payableAmount) }}
-        {{ item.currency }}
-
-      </small>
-
-      <small>
-
-        {{ item.paymentMethod }}
-
-      </small>
-
-      <small>
-
-        {{ formatDate(item.createdOn) }}
-
-      </small>
-
-    </div>
-
-    <div class="text-end">
-
-      <span
-        class="badge"
-        :class="{
-          'bg-warning':item.status==='PENDING',
-          'bg-success':item.status==='APPROVED',
-          'bg-danger':item.status==='REJECTED'
-        }"
-      >
-
-        {{ item.status }}
-
-      </span>
-
-    </div>
-
-  </div>
+    </small>
 
 </div>
 
-     
-      <!-- Personal Information -->
-      <div
-        class="menu-item"
-        @click="togglePersonalInfo"
-      >
 
-        <div>
 
-          <i class="bi bi-person"></i>
+<!-- ================= SUMMARY ================= -->
 
-          Personal Information
+<div class="row mt-4 g-3">
 
-        </div>
 
-        <i
-          :class="showPersonalInfo
-            ? 'bi bi-chevron-up'
-            : 'bi bi-chevron-down'"
-        ></i>
+<div class="col-4">
 
-      </div>
+<div class="summary-card">
 
-      <div
-        v-if="showPersonalInfo"
-        class="personal-info"
-      >
+<i class="bi bi-wallet2"></i>
 
-        <div class="info-row">
+<h6>Balance</h6>
 
-          <span>Phone</span>
+<h5>
+{{ formatAmount(user.balance) }} USDT
+</h5>
 
-          <strong>{{ user.phone }}</strong>
+</div>
 
-        </div>
+</div>
 
-        <div class="info-row">
 
-          <span>Referral Code</span>
 
-          <strong>{{ user.referralCode || "-" }}</strong>
+<div class="col-4">
 
-        </div>
+<div class="summary-card">
 
-        <div class="info-row">
+<i class="bi bi-graph-up-arrow"></i>
 
-          <span>Status</span>
+<h6>Income</h6>
 
-          <strong>{{ user.status }}</strong>
+<h5>
+{{ formatAmount(user.totalIncome) }} INR
+</h5>
 
-        </div>
+</div>
 
-        <div class="info-row">
+</div>
 
-          <span>Member Since</span>
 
-          <strong>
 
-            {{ 
-               formatDate(user.createdOn)
-              }}
+<div class="col-4">
 
-          </strong>
+<div class="summary-card">
 
-        </div>
+<i class="bi bi-cash-stack"></i>
 
-      </div>
+<h6>Recharge</h6>
 
-      <!-- About -->
-      <div
-        class="menu-item"
-        @click="toggleAbout"
-      >
+<h5>
+{{ formatAmount(user.totalRecharge) }} INR
+</h5>
 
-        <div>
+</div>
 
-          <i class="bi bi-info-circle"></i>
+</div>
 
-          About Us
 
-        </div>
+</div>
 
-        <i
-          :class="showAbout
-            ? 'bi bi-chevron-up'
-            : 'bi bi-chevron-down'"
-        ></i>
 
-      </div>
 
-      <div
-        v-if="showAbout"
-        class="about-box"
-      >
 
-        <h6>Investment Platform</h6>
 
-        <p>
+<!-- ================= MENU ================= -->
 
-          Welcome to our investment platform. Our mission is to provide
-          users with a secure, reliable, and easy-to-use experience for
-          managing investments and earnings.
 
-        </p>
+<div class="menu-list mt-4">
 
-        <hr>
 
-        <p>
 
-          <strong>Version:</strong> 1.0.0
+<!-- ================= RECHARGE ================= -->
 
-        </p>
+<div
+class="menu-item"
+@click="toggleRechargeHistory"
+>
 
-        <p>
+<div>
 
-          <strong>Email:</strong>
-          support@investment.com
+<i class="bi bi-credit-card"></i>
 
-        </p>
+Recharge Details
 
-      </div>
+</div>
 
-      <!-- Logout -->
-      <div
-        class="menu-item logout-menu"
-        @click="logout"
-      >
 
-        <div>
+<i
+:class="
+showRechargeHistory
+?'bi bi-chevron-up'
+:'bi bi-chevron-down'
+"
+/>
 
-          <i class="bi bi-box-arrow-right"></i>
+</div>
 
-          Logout
 
-        </div>
 
-        <i class="bi bi-chevron-right"></i>
+<div
+v-if="showRechargeHistory"
+class="menu-content"
+>
 
-      </div>
 
-    </div>
+<div
+v-if="rechargeHistory.length===0"
+class="empty-box"
+>
 
-    <Footer />
+No successful recharge found.
 
-  </div>
+</div>
+
+
+
+<div
+v-for="item in rechargeHistory"
+:key="item.id"
+class="history-card"
+>
+
+
+<div class="history-left">
+
+
+<div class="history-amount">
+
+{{formatAmount(item.amount)}} USDT
+
+</div>
+
+
+<small>
+
+{{formatDate(item.createdOn)}}
+
+</small>
+
+
+</div>
+
+
+
+<span
+class="badge"
+:class="
+item.status==='SUCCESS'
+?'bg-success'
+:'bg-danger'
+"
+>
+
+{{item.status}}
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<!-- ================= WITHDRAW ================= -->
+
+
+<div
+class="menu-item"
+@click="toggleWithdraw"
+>
+
+
+<div>
+
+<i class="bi bi-cash"></i>
+
+Withdraw Details
+
+</div>
+
+
+<i
+:class="
+showWithdraw
+?'bi bi-chevron-up'
+:'bi bi-chevron-down'
+"
+/>
+
+
+</div>
+
+
+
+
+<div
+v-if="showWithdraw"
+class="menu-content"
+>
+
+
+
+<div
+v-if="withdrawHistory.length===0"
+class="empty-box"
+>
+
+No withdraw history found.
+
+</div>
+
+
+
+
+<div
+v-for="item in withdrawHistory"
+:key="item.id"
+class="history-card"
+>
+
+
+<div class="history-left">
+
+
+<div class="history-title">
+
+Wallet Deduction
+
+</div>
+
+
+<div class="history-amount">
+
+{{formatAmount(item.requestedAmountUsdt)}} USDT
+
+</div>
+
+
+<small>
+
+Equivalent :
+₹{{formatAmount(item.requestedAmountInr)}}
+
+</small>
+
+
+<small>
+
+Fee :
+{{formatAmount(item.serviceFee)}}
+{{item.currency}}
+
+</small>
+
+
+<small>
+
+Pay User :
+{{formatAmount(item.payableAmount)}}
+{{item.currency}}
+
+</small>
+
+
+<small>
+
+{{item.paymentMethod}}
+
+</small>
+
+
+<small>
+
+{{formatDate(item.createdOn)}}
+
+</small>
+
+
+</div>
+
+
+
+<span
+class="badge"
+:class="{
+
+'bg-warning':item.status==='PENDING',
+
+'bg-success':item.status==='APPROVED',
+
+'bg-danger':item.status==='REJECTED'
+
+}"
+>
+
+{{item.status}}
+
+</span>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ================= INVESTMENT PLANS ================= -->
+
+
+<div
+class="menu-item"
+@click="togglePlans"
+>
+
+
+<div>
+
+<i class="bi bi-graph-up"></i>
+
+Plans
+
+</div>
+
+
+<i
+:class="
+showPlans
+?'bi bi-chevron-up'
+:'bi bi-chevron-down'
+"
+/>
+
+
+</div>
+
+
+
+
+
+<div
+v-if="showPlans"
+class="menu-content"
+>
+
+
+
+<div
+v-if="investmentPlans.length===0"
+class="empty-box"
+>
+
+No investment plans found.
+
+</div>
+
+
+
+
+
+<div
+v-for="item in investmentPlans"
+:key="item.investmentId"
+class="history-card"
+>
+
+
+<div class="history-left">
+
+
+
+<div class="history-title">
+
+{{item.productName}}
+
+</div>
+
+
+
+<div class="history-amount">
+
+INR {{item.investmentAmount}}
+
+</div>
+
+
+
+<small>
+
+Purchase Date :
+{{formatDate(item.startDate)}}
+
+</small>
+
+
+
+<small>
+
+Daily Income :
+INR {{item.dailyIncome}} / Day
+
+</small>
+
+
+
+<small>
+
+Duration :
+{{item.durationDays}} Days
+
+</small>
+
+
+
+<small>
+
+End Date :
+{{formatDate(item.endDate)}}
+
+</small>
+
+
+
+</div>
+
+
+
+
+<span
+class="badge"
+:class="
+item.status==='ACTIVE'
+?'bg-success'
+:'bg-danger'
+"
+>
+
+{{item.status}}
+
+</span>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ================= PERSONAL INFO ================= -->
+
+
+<div
+class="menu-item"
+@click="togglePersonalInfo"
+>
+
+
+<div>
+
+<i class="bi bi-person"></i>
+
+Personal Information
+
+</div>
+
+
+<i
+:class="
+showPersonalInfo
+?'bi bi-chevron-up'
+:'bi bi-chevron-down'
+"
+/>
+
+
+</div>
+
+
+
+
+<div
+v-if="showPersonalInfo"
+class="personal-info"
+>
+
+
+<div class="info-row">
+
+<span>
+Phone
+</span>
+
+<strong>
+{{user.phone}}
+</strong>
+
+</div>
+
+
+
+<div class="info-row">
+
+<span>
+Referral Code
+</span>
+
+<strong>
+{{user.referralCode || '-'}}
+</strong>
+
+</div>
+
+
+
+<div class="info-row">
+
+<span>
+Status
+</span>
+
+<strong>
+{{user.status}}
+</strong>
+
+</div>
+
+
+
+<div class="info-row">
+
+<span>
+Member Since
+</span>
+
+<strong>
+{{formatDate(user.createdOn)}}
+</strong>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ================= ABOUT ================= -->
+
+
+<div
+class="menu-item"
+@click="toggleAbout"
+>
+
+
+<div>
+
+<i class="bi bi-info-circle"></i>
+
+About Us
+
+</div>
+
+
+<i
+:class="
+showAbout
+?'bi bi-chevron-up'
+:'bi bi-chevron-down'
+"
+/>
+
+
+</div>
+
+
+
+
+<div
+v-if="showAbout"
+class="about-box"
+>
+
+
+<h6>
+Investment Platform
+</h6>
+
+
+<p>
+
+Welcome to our investment platform. Our mission is to provide users with a secure, reliable, and easy-to-use experience for managing investments and earnings.
+
+</p>
+
+
+
+<hr>
+
+
+<p>
+
+<strong>
+Version:
+</strong>
+
+1.0.0
+
+</p>
+
+
+
+<p>
+
+<strong>
+Email:
+</strong>
+
+support@investment.com
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+<!-- ================= LOGOUT ================= -->
+
+
+<div
+class="menu-item logout-menu"
+@click="logout"
+>
+
+
+<div>
+
+<i class="bi bi-box-arrow-right"></i>
+
+Logout
+
+</div>
+
+
+
+<i class="bi bi-chevron-right"></i>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+<Footer />
+
+
+</div>
+
+
 </template>
 <script setup>
 
@@ -412,6 +731,9 @@ const showRechargeHistory = ref(false);
 const showWithdraw = ref(false);
 const showPersonalInfo = ref(false);
 const showAbout = ref(false);
+const investmentPlans = ref([]);
+
+const showPlans = ref(false);
 
 const token = localStorage.getItem("token");
 const withdrawHistory = ref([]);
@@ -536,6 +858,61 @@ const toggleWithdraw = async () => {
 const togglePersonalInfo = () => {
 
     showPersonalInfo.value = !showPersonalInfo.value;
+
+};
+
+/* -------------------------------
+   Investment Plans
+--------------------------------*/
+
+const loadInvestmentPlans = async () => {
+
+    try {
+
+
+        const response = await api.get(
+
+            `/investments/investMentDetails/${user.value.id}`,
+
+            {
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            }
+
+        );
+
+
+        investmentPlans.value = response.data;
+
+
+    } catch(error){
+
+        console.error(
+            "Investment Plan Error",
+            error
+        );
+
+    }
+
+};
+const togglePlans = async()=>{
+
+
+    showPlans.value =
+        !showPlans.value;
+
+
+
+    if(
+        showPlans.value &&
+        investmentPlans.value.length === 0
+    ){
+
+        await loadInvestmentPlans();
+
+    }
+
 
 };
 
