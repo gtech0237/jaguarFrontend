@@ -24,12 +24,11 @@ public class PaymentRequestServiceImpl implements IPaymentRequestService {
         }
 
         PaymentRequest request = new PaymentRequest();
-
         request.setUserId(dto.getUserId());
         request.setAmount(dto.getAmount());
         request.setCurrency("USDT");
         request.setTransactionId(dto.getTransactionId());
-        request.setPaymentMethod("TRC20");
+        request.setPaymentMethod(" BEP20");
         request.setStatus("PENDING");
         request.setCreatedOn(LocalDateTime.now());
 

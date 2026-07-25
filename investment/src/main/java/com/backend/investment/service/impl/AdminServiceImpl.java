@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+
 @Service
 @RequiredArgsConstructor
 public class AdminServiceImpl implements IAdminService {
@@ -438,57 +439,115 @@ public class AdminServiceImpl implements IAdminService {
 
                     Plan plan = product.getPlan();
 
-                    int daysPassed = 0;
 
-                    if (investment.getStartDate() != null) {
+                    LocalDate startDate = investment.getStartDate();
 
-                        daysPassed = (int) ChronoUnit.DAYS.between(
-                                investment.getStartDate(),
-                                LocalDate.now());
+                    LocalDate endDate = investment.getEndDate();
 
-                        if (daysPassed < 0) {
-                            daysPassed = 0;
-                        }
-                    }
+
+                    int completedDays = 0;
 
                     int daysRemaining =
-                            investment.getDurationDays() - daysPassed;
+                            investment.getDurationDays();
 
-                    if (daysRemaining < 0) {
-                        daysRemaining = 0;
+
+                    if (startDate != null) {
+
+                        completedDays =
+                                (int) ChronoUnit.DAYS.between(
+                                        startDate,
+                                        LocalDate.now()
+                                );
+
+
+                        if (completedDays < 0) {
+                            completedDays = 0;
+                        }
+
+
+                        if (completedDays >
+                                investment.getDurationDays()) {
+
+                            completedDays =
+                                    investment.getDurationDays();
+
+                        }
+
+
+                        daysRemaining =
+                                investment.getDurationDays()
+                                        - completedDays;
+
+
+                        if (daysRemaining < 0) {
+                            daysRemaining = 0;
+                        }
+
                     }
+
+
 
                     return DailyIncomeDetailsDto.builder()
 
-                            .investmentId(investment.getId())
+                            .investmentId(
+                                    investment.getId()
+                            )
 
-                            .userId(user.getId())
+                            .userId(
+                                    user.getId()
+                            )
 
-                            .phone(user.getPhone())
+                            .phone(
+                                    user.getPhone()
+                            )
 
-                            .planName(plan.getPlanName())
+                            .planName(
+                                    plan.getPlanName()
+                            )
 
-                            .productName(product.getProductName())
+                            .productName(
+                                    product.getProductName()
+                            )
 
-                            .investmentAmount(investment.getInvestmentAmount())
+                            .investmentAmount(
+                                    investment.getInvestmentAmount()
+                            )
 
-                            .dailyIncome(investment.getDailyIncome())
+                            .dailyIncome(
+                                    investment.getDailyIncome()
+                            )
 
-                            .durationDays(investment.getDurationDays())
+                            .durationDays(
+                                    investment.getDurationDays()
+                            )
 
-                            .purchaseDate(investment.getStartDate())
+                            .purchaseDate(
+                                    startDate
+                            )
 
-                            .completedDays(daysPassed)
+                            .endDate(
+                                    endDate
+                            )
 
-                            .daysRemaining(daysRemaining)
+                            .completedDays(
+                                    completedDays
+                            )
 
-                            .availableBalance(user.getBalance())
+                            .daysRemaining(
+                                    daysRemaining
+                            )
+
+                            .availableBalance(
+                                    user.getBalance()
+                            )
 
                             .totalIncomePaid(
                                     investment.getTotalIncomeGenerated()
                             )
 
-                            .status(investment.getStatus())
+                            .status(
+                                    investment.getStatus()
+                            )
 
                             .build();
 
