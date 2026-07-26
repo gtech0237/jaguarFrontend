@@ -690,78 +690,30 @@ function adminHeaders(){
 |--------------------------------------------------------------------------
 */
 
-
-async function loadDailyIncomeDetails(){
-
-
-    try{
-
-
+async function loadDailyIncomeDetails() {
+    try {
         loading.value = true;
 
-
-
         const response = await api.get(
-
             "/admin/daily-income",
-
             {
-
-                headers:
-                adminHeaders()
-
+                headers: adminHeaders()
             }
-
         );
 
+        incomeDetails.value = response.data;
 
-        /*
-        incomeDetails.value =
-            response.data;
-        console.log(
-            "Daily Income Details Loaded",
-            incomeDetails.value
-        );
-        */
-
-
-    }
-
-    catch(error){
-
-
-        console.error(
-
-            "Daily Income Load Error",
-
-            error
-
-        );
-
-
+    } catch (error) {
+        console.error(error);
 
         Toast.fire({
-
-            icon:"error",
-
-            title:
-            error.response?.data ||
-            "Failed to load income details"
-
+            icon: "error",
+            title: error.response?.data || "Failed to load income details"
         });
 
-
-
+    } finally {
+        loading.value = false;
     }
-
-    finally{
-
-
-        loading.value=false;
-
-
-    }
-
 }
 
 
