@@ -437,6 +437,18 @@ async function register() {
         return;
 
     }
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(phone.value)) {
+
+        await Swal.fire({
+            icon: "warning",
+            title: "Invalid Phone Number",
+            text: "Phone number must contain exactly 10 digits."
+        });
+
+        return;
+
+    }
 
     try {
 
@@ -538,6 +550,19 @@ async function login() {
 
             text: "Please enter phone number and password."
 
+        });
+
+        return;
+
+    }
+    const phoneRegex = /^[0-9]{10}$/;
+
+    if (!phoneRegex.test(loginPhone.value)) {
+
+        await Swal.fire({
+            icon: "warning",
+            title: "Invalid Phone Number",
+            text: "Phone number must contain exactly 10 digits."
         });
 
         return;
