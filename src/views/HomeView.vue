@@ -121,8 +121,10 @@ onMounted(async () => {
 
     }
 
-    await loadPlans();
-    await loadProducts();
+    await Promise.all([
+            loadPlans(),
+            loadProducts()
+        ]);
 
 });
 
