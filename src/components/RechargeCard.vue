@@ -9,7 +9,7 @@
     </div>
     <div class="exchange-rate-card">
       <i class="bi bi-currency-exchange"></i>
-      <span><strong>1 USDT = ₹100 INR</strong></span>
+      <span><strong>1 USDT = ₹98 INR</strong></span>
     </div>
     <!-- Payment Card -->
 

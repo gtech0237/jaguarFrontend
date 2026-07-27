@@ -604,7 +604,7 @@ const Toast = Swal.mixin({
 
 // Temporary fixed rate.
 // Later you can load it from backend.
-const usdtRate = ref(100);
+const usdtRate = ref(98);
 
 /* ===========================================
    Reactive Variables

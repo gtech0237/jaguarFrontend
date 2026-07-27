@@ -364,16 +364,21 @@ const location = ref("");
 ========================================== */
 
 onMounted(async () => {
-
     const token = localStorage.getItem("token");
-
     if (token) {
 
         router.replace("/home");
         return;
+    }
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref");
+    if (ref) {
+        referralCode.value = ref;
+
+        // Open the Register tab automatically
+        activeTab.value = "register";
 
     }
-
     await loadClientInfo();
 
 });

@@ -37,72 +37,40 @@
     ====================================================== -->
 
     <div class="tab-wrapper">
-
-        <button
-
-            class="tab-btn"
-
-            :class="{
-                active: activeTab==='recharge'
-            }"
-
-            @click="activeTab='recharge'"
-
-        >
-
+        <button class="tab-btn" :class="{ active: activeTab==='recharge' }"
+            @click="activeTab='recharge'">
             <i class="bi bi-wallet2"></i>
-
             Pending Recharge
-
-            <span
-                class="badge rounded-pill bg-warning text-dark"
-            >
+            <span class="badge rounded-pill bg-warning text-dark">
                 {{ pendingRechargeCount }}
             </span>
-
         </button>
 
 
 
-        <button
-
-            class="tab-btn"
-
-            :class="{
-                active: activeTab==='withdraw'
-            }"
-
-            @click="activeTab='withdraw'"
-
-        >
-
+        <button class="tab-btn" :class="{active: activeTab==='withdraw'}" @click="activeTab='withdraw'">
             <i class="bi bi-cash-stack"></i>
-
             Pending Withdraw
-
             <span
                 class="badge rounded-pill bg-warning text-dark"
             >
                 {{ pendingWithdrawCount }}
             </span>
-
         </button>
-        <button
 
-            class="tab-btn"
-
-            :class="{
-                active: activeTab==='income'
-            }"
-
-            @click="activeTab='income'"
-
-        >
-
+        <button class="tab-btn" :class="{ active: activeTab==='income'}"
+            @click="activeTab='income'">
             <i class="bi bi-graph-up-arrow"></i>
-
             Daily Income Details
+        </button>
 
+        <button
+        class="tab-btn"
+        :class="{ active: activeTab==='users' }"
+        @click="activeTab='users'">
+        <i class="bi bi-people-fill"></i>
+
+        Registered Users
         </button>
 
     </div>
@@ -112,42 +80,31 @@
     <!-- =====================================================
          SEARCH
     ====================================================== -->
+    <div
+    class="search-section"
+    v-if="activeTab==='recharge' || activeTab==='withdraw'">
 
-    <div class="search-section">
+    <div class="search-box">
 
-        <div class="search-box">
+        <i class="bi bi-search"></i>
 
-            <i class="bi bi-search"></i>
+        <input
+            v-if="activeTab==='recharge'"
+            type="text"
+            class="form-control"
+            v-model="rechargeSearch"
+            placeholder="Search by Phone or Transaction Hash"
+        />
 
-            <input
+        <input
+            v-else
+            type="text"
+            class="form-control"
+            v-model="withdrawSearch"
+            placeholder="Search by Phone or Account Details"
+        />
 
-                v-if="activeTab==='recharge'"
-
-                type="text"
-
-                class="form-control"
-
-                v-model="rechargeSearch"
-
-                placeholder="Search by Phone or Transaction Hash"
-
-            />
-
-            <input
-
-                v-else
-
-                type="text"
-
-                class="form-control"
-
-                v-model="withdrawSearch"
-
-                placeholder="Search by Phone or Account Details"
-
-            />
-
-        </div>
+    </div>
 
     </div>
 
@@ -390,9 +347,10 @@
 
             </div>
             <div v-else-if="activeTab==='income'">
-
                 <DailyIncomeDetails />
-
+            </div>
+            <div v-else-if="activeTab==='users'">
+                <RegisterUserDetails />
             </div>
 
 
@@ -689,6 +647,7 @@ import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
 import api from "@/services/api";
 import DailyIncomeDetails from "./DailyIncomeDetails.vue";
+import RegisterUserDetails from "./RegisterUserDetails.vue";
 
 const router = useRouter();
 
