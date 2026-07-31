@@ -28,7 +28,7 @@
 
             <h2>Grand Launch</h2>
 
-            <p>Official Launch • 27 July 2026</p>
+            <p>Officially Launched</p>
 
         </div>
 

@@ -636,9 +636,9 @@ Investment Platform
 
 
 <p>
+Welcome to our investment platform. Our mission is to provide users with a secure, reliable, and easy-to-use experience for managing their investments and earnings.
 
-Welcome to our investment platform. Our mission is to provide users with a secure, reliable, and easy-to-use experience for managing investments and earnings.
-
+All transactions on the platform are conducted in USDT, except for withdrawals. Users can withdraw their funds using any available withdrawal method. Any applicable withdrawal commission or service fee is calculated and converted based on the current USDT value.
 </p>
 
 

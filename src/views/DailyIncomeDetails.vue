@@ -141,29 +141,31 @@
 <!-- =====================================================
      SEARCH SECTION
 ====================================================== -->
-
 <div class="search-section">
-
 
     <div class="search-box">
 
-
         <i class="bi bi-search"></i>
 
+        <input
+            type="text"
+            class="form-control"
+            v-model="search"
+            placeholder="Search by User ID, Phone, Plan, Product or Status"
+        />
+
+    </div>
+
+    <div class="date-filter">
+
+        <label>Filter by Date</label>
 
         <input
-
-            type="text"
-
+            type="date"
             class="form-control"
-
-            v-model="search"
-
-            placeholder="
-            Search by User ID, Phone, Plan, Product or Status
-            "
-
+            v-model="selectedDate"
         />
+
     </div>
 
 </div>
@@ -632,8 +634,7 @@ const incomeDetails = ref([]);
 
 
 const search = ref("");
-
-
+const selectedDate = ref("");
 const loading = ref(false);
 
 
@@ -726,85 +727,70 @@ async function loadDailyIncomeDetails() {
 |--------------------------------------------------------------------------
 */
 
-
-const filteredIncomeDetails = computed(()=>{
-
+const filteredIncomeDetails = computed(() => {
 
     const keyword =
         search.value
             .trim()
             .toLowerCase();
 
+    return incomeDetails.value.filter(item => {
 
-
-    if(!keyword)
-
-        return incomeDetails.value;
-
-
-
-    return incomeDetails.value.filter(item=>{
-
-
-        return (
+        // Search filter
+        const matchesSearch =
+            !keyword ||
 
             String(item.investmentId)
                 .includes(keyword)
 
-
             ||
-
 
             String(item.userId)
                 .includes(keyword)
 
-
-
             ||
-
 
             (item.phone || "")
                 .toLowerCase()
                 .includes(keyword)
 
-
-
             ||
-
 
             (item.planName || "")
                 .toLowerCase()
                 .includes(keyword)
 
-
-
             ||
-
 
             (item.productName || "")
                 .toLowerCase()
                 .includes(keyword)
 
-
-
             ||
-
 
             (item.status || "")
                 .toLowerCase()
-                .includes(keyword)
+                .includes(keyword);
 
 
+        // Date filter
+        const matchesDate =
+            !selectedDate.value ||
 
-        );
+            (
+                item.purchaseDate &&
+                new Date(item.purchaseDate)
+                    .toISOString()
+                    .split("T")[0]
+                === selectedDate.value
+            );
 
+
+        return matchesSearch && matchesDate;
 
     });
 
-
 });
-
-
 
 
 
@@ -1197,20 +1183,40 @@ onUnmounted(()=>{
 /* =========================================================
    SEARCH
 ========================================================= */
-
-
-.search-section{
-
-    margin-bottom:25px;
-
+.search-section {
+    margin-bottom: 25px;
+    display: flex;
+    gap: 15px;
+    align-items: end;
 }
 
+.search-box {
+    position: relative;
+    flex: 1;
+}
 
+.date-filter {
+    width: 220px;
+}
 
-.search-box{
+.date-filter label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+}
 
-    position:relative;
+.date-filter input {
+    height: 48px;
+    border-radius: 14px;
+    border: 1px solid #ddd;
+    background: white;
+}
 
+.date-filter input:focus {
+    border-color: #7f6744;
+    box-shadow: 0 0 0 4px rgba(127,103,68,.12);
 }
 
 
@@ -1585,82 +1591,276 @@ onUnmounted(()=>{
 
 }
 
-
-
-
-
 /* =========================================================
    RESPONSIVE
 ========================================================= */
 
+/* =========================
+   LARGE TABLET / LAPTOP
+========================= */
 
-@media(max-width:1200px){
+@media (max-width: 1200px) {
 
-
-    .summary-container{
+    .summary-container {
 
         grid-template-columns:
-
-        repeat(2,1fr);
+        repeat(2, 1fr);
 
     }
 
+    .search-section {
+
+        gap: 12px;
+
+    }
+
+    .date-filter {
+
+        width: 200px;
+
+    }
 
 }
 
 
+/* =========================
+   TABLET / MOBILE
+========================= */
 
-@media(max-width:768px){
+@media (max-width: 768px) {
 
- 
+    /* Header */
 
- 
+    .header-actions {
 
+        width: 100%;
 
+        display: flex;
 
-    .header-actions{
-
-        width:100%;
-
-    }
-
-
-
-    .header-actions button{
-
-        flex:1;
+        gap: 10px;
 
     }
 
 
+    .header-actions button {
 
-    .summary-container{
-
-        grid-template-columns:1fr;
-
-    }
-
-
-
-    .card-body{
-
-        padding:15px;
+        flex: 1;
 
     }
 
 
+    /* Summary Cards */
 
-    .table{
+    .summary-container {
 
-        min-width:1400px;
+        grid-template-columns: 1fr;
 
     }
 
+
+    /* Search + Date Filter */
+
+    .search-section {
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 12px;
+
+    }
+
+
+    .search-box {
+
+        width: 100%;
+
+    }
+
+
+    .date-filter {
+
+        width: 100%;
+
+    }
+
+
+    .date-filter label {
+
+        font-size: 13px;
+
+        margin-bottom: 6px;
+
+    }
+
+
+    .date-filter input {
+
+        width: 100%;
+
+    }
+
+
+    /* Card */
+
+    .card-body {
+
+        padding: 15px;
+
+    }
+
+
+    /* Table */
+
+    .table-responsive {
+
+        overflow-x: auto;
+
+        -webkit-overflow-scrolling: touch;
+
+    }
+
+
+    .table {
+
+        min-width: 1400px;
+
+    }
 
 }
 
 
+/* =========================
+   SMALL MOBILE
+========================= */
 
-</style>
+@media (max-width: 576px) {
+
+    .summary-card {
+
+        padding: 18px;
+
+    }
+
+
+    .summary-icon {
+
+        width: 48px;
+
+        height: 48px;
+
+        font-size: 21px;
+
+    }
+
+
+    .summary-content h3 {
+
+        font-size: 21px;
+
+    }
+
+
+    .search-section {
+
+        gap: 10px;
+
+    }
+
+
+    .search-box input {
+
+        height: 46px;
+
+        font-size: 13px;
+
+    }
+
+
+    .date-filter input {
+
+        height: 46px;
+
+        font-size: 13px;
+
+    }
+
+
+    .card-body {
+
+        padding: 12px;
+
+    }
+
+
+    .table {
+
+        min-width: 1400px;
+
+    }
+
+}
+
+
+/* =========================
+   VERY SMALL MOBILE
+========================= */
+
+@media (max-width: 400px) {
+
+    .summary-card {
+
+        padding: 15px;
+
+        gap: 12px;
+
+    }
+
+
+    .summary-icon {
+
+        width: 44px;
+
+        height: 44px;
+
+        font-size: 19px;
+
+    }
+
+
+    .summary-content span {
+
+        font-size: 12px;
+
+    }
+
+
+    .summary-content h3 {
+
+        font-size: 19px;
+
+    }
+
+
+    .search-box input,
+    .date-filter input {
+
+        height: 44px;
+
+        font-size: 12px;
+
+    }
+
+
+    .table {
+
+        min-width: 1400px;
+
+    }
+
+}
+    </style>
 
 
